@@ -117,15 +117,12 @@ namespace Monogame_Texture_Rotation
             float rise = secondPoint.Y - originPoint.Y;
             float run = secondPoint.X - originPoint.X;
 
-            // First Quadrant
-            if (originPoint.X <= secondPoint.X && originPoint.Y <= secondPoint.Y)
-                return (float)Math.Atan(-rise / run);
-            //Second and Third Quadrant
-            else if (originPoint.X >= secondPoint.X && originPoint.Y <= secondPoint.Y || originPoint.X >= secondPoint.X && originPoint.Y >= secondPoint.Y)
-                return (float)Math.PI + (float)Math.Atan(-rise / run);
-            // Fourth Quadrant
+            // First or Fourth Quadrant
+            if (originPoint.X <= secondPoint.X && originPoint.Y <= secondPoint.Y || originPoint.X <= secondPoint.X && originPoint.Y >= secondPoint.Y)
+                return (float)Math.Atan(rise / run);
+            //Second or Third Quadrant
             else
-                return -(float)Math.Atan(-rise / run);
+                return (float)Math.PI + (float)Math.Atan(rise / run);
         }
     }
 }
