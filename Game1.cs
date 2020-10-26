@@ -27,14 +27,12 @@ namespace Monogame_Texture_Rotation
         Vector2 tank3RotationOrigin;
 
         
-        // Tank rotated by mouse
+        // Tank that will be rotated by the mouse
         Vector2 tankLocationMouse;
         Rectangle tankHitBoxMouse;
 
-        //  Tank rotated by keyboard
+        //  Tank that will be rotated by the keyboard
         Vector2 tankLocationKeyboard;
-
-        
 
         float tankAngle;            // Automatic rotation angle
         float tankAngleKeyboard;    // Rotating with keyboard angle
@@ -75,8 +73,6 @@ namespace Monogame_Texture_Rotation
             //Tank that you control with the keyboard
             tankLocationKeyboard = new Vector2(500, 400);
 
-
-
         }
 
         protected override void LoadContent()
@@ -86,7 +82,6 @@ namespace Monogame_Texture_Rotation
             // TODO: use this.Content to load your game content here
             tankTexture = Content.Load<Texture2D>("tank");
             textFont = Content.Load<SpriteFont>("fontInfo");
-
         }
 
         protected override void Update(GameTime gameTime)
@@ -106,8 +101,7 @@ namespace Monogame_Texture_Rotation
             // Gets angle of rotation between tank location and mouse location
             tankAngleMouse = GetAngle(tankLocationMouse, new Vector2(mouseState.X, mouseState.Y));
 
-
-            // Rotates based on arrow keys
+            // Rotates based on Keyboard
             // Rotates counter clockwise if left arrow is pressed
             if (Keyboard.GetState().IsKeyDown(Keys.Left))
             {
@@ -116,14 +110,13 @@ namespace Monogame_Texture_Rotation
                     tankAngleKeyboard = (float)(2 * Math.PI);
             }
 
-            // Rorates clockwise if right arrow is pressed
+            // Rotates clockwise if right arrow is pressed
             if (Keyboard.GetState().IsKeyDown(Keys.Right))
             {
                 tankAngleKeyboard += 0.03f;
                 if (tankAngleKeyboard > 2 * Math.PI)    // Keeps rotation between 0 and 360 to prevent overflow
                     tankAngleKeyboard = 0;
             }
-
 
             base.Update(gameTime);
         }
@@ -155,10 +148,8 @@ namespace Monogame_Texture_Rotation
             // Rotates to follow the mouse
             _spriteBatch.Draw(tankTexture, tankLocationMouse, null, Color.White, tankAngleMouse, new Vector2(tankTexture.Width / 2, tankTexture.Height / 2), 1f, SpriteEffects.None, 1);
             _spriteBatch.DrawString(textFont, "Angle: " + (int)(360 - Math.Round(tankAngleMouse * (180 / Math.PI), 1)) % 360 + " degrees", new Vector2(40, 320), Color.White);
-            if (tankHitBoxMouse.Contains(mouseState.X, mouseState.Y))
+            if (tankHitBoxMouse.Contains(mouseState.X, mouseState.Y))   // Displays message if cursor intersects with mouse controlled tank
                 _spriteBatch.DrawString(textFont, "Mouse Hitting Tank", new Vector2(40, 380), Color.White);
-
-
 
             // Keyboard controlled angle
             _spriteBatch.Draw(tankTexture, tankLocationKeyboard, null, Color.White, tankAngleKeyboard, new Vector2(tankTexture.Width / 2, tankTexture.Height / 2), 1f, SpriteEffects.None, 1);
