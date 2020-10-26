@@ -14,7 +14,7 @@ namespace Monogame_Texture_Rotation
         Rectangle tankRect1;
         Rectangle tankRect2;
         Rectangle tankRect3;
-        Rectangle tankRect4;
+        Rectangle tankHitBox;
 
         Vector2 tankLocation;
 
@@ -46,7 +46,7 @@ namespace Monogame_Texture_Rotation
             //Tank that follows mouse
             tankLocation = new Vector2(400, 400); // Location of the center of the tank          
             // This is where a hitbox rectangle could be for rotating tank, but it would be better to use a bounding circle
-            tankRect4 = new Rectangle(400 - tankTexture.Width / 2, 400 - tankTexture.Height / 2, tankTexture.Width, tankTexture.Height);
+            tankHitBox = new Rectangle(400 - tankTexture.Width / 2, 400 - tankTexture.Height / 2, tankTexture.Width, tankTexture.Height);
         }
 
         protected override void LoadContent()
@@ -111,7 +111,7 @@ namespace Monogame_Texture_Rotation
             base.Draw(gameTime);
         }
 
-        // Must figure out how to get the correct angle in Quadrants 2-4 and convert them to clockwise rotation 
+        // Determines the angle in radians that the origin texture needs to be rotated by in order to point at secondPoint
         public float GetAngle(Vector2 originPoint, Vector2 secondPoint)
         {
             float rise = secondPoint.Y - originPoint.Y;
@@ -122,7 +122,7 @@ namespace Monogame_Texture_Rotation
                 return (float)Math.Atan(rise / run);
             //Second or Third Quadrant
             else
-                return (float)Math.PI + (float)Math.Atan(rise / run);
+                return (float)(Math.PI + Math.Atan(rise / run));
         }
     }
 }
